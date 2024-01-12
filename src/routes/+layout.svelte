@@ -10,7 +10,10 @@
 	import css from 'highlight.js/lib/languages/css';
 	import javascript from 'highlight.js/lib/languages/javascript';
 	import typescript from 'highlight.js/lib/languages/typescript';
-
+//Free Icon
+	import '@fortawesome/fontawesome-free/css/fontawesome.css';
+	import '@fortawesome/fontawesome-free/css/brands.css';
+	import '@fortawesome/fontawesome-free/css/solid.css';
 	hljs.registerLanguage('xml', xml); // for HTML
 	hljs.registerLanguage('css', css);
 	hljs.registerLanguage('javascript', javascript);
@@ -21,6 +24,24 @@
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
+	//InLang
+	import { page } from "$app/stores";
+  import { setLanguageTag, sourceLanguageTag, type AvailableLanguageTag } from "$paraglide/runtime";
+  import { getTextDirection } from "$lib/i18n.js"
+	import { browser } from '$app/environment';
+  //Use the default language if no language is given
+  $: lang = $page.params.lang as AvailableLanguageTag ?? sourceLanguageTag;
+  $: setLanguageTag(lang);
+
+	//Determine the text direction of the current language
+	$: textDirection = getTextDirection(lang)
+
+	//Keep the <html> lang and dir attributes in sync with the current language
+	$: if (browser) {
+		document.documentElement.dir = textDirection
+		document.documentElement.lang = lang
+	}
 </script>
 
 <!-- App Shell -->
@@ -31,34 +52,10 @@
 			<svelte:fragment slot="lead">
 				<strong class="text-xl uppercase">Skeleton</strong>
 			</svelte:fragment>
-			<svelte:fragment slot="trail">
-				<a
-					class="btn btn-sm variant-ghost-surface"
-					href="https://discord.gg/EXqV7W8MtY"
-					target="_blank"
-					rel="noreferrer"
-				>
-					Discord
-				</a>
-				<a
-					class="btn btn-sm variant-ghost-surface"
-					href="https://twitter.com/SkeletonUI"
-					target="_blank"
-					rel="noreferrer"
-				>
-					Twitter
-				</a>
-				<a
-					class="btn btn-sm variant-ghost-surface"
-					href="https://github.com/skeletonlabs/skeleton"
-					target="_blank"
-					rel="noreferrer"
-				>
-					GitHub
-				</a>
-			</svelte:fragment>
+		
 		</AppBar>
 	</svelte:fragment>
-	<!-- Page Route Content -->
-	<slot />
+	{#key lang}
+	<slot></slot>
+  {/key}
 </AppShell>
