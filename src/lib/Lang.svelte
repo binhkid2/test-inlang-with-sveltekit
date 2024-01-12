@@ -1,11 +1,7 @@
 
 <script lang="ts">
-    import { availableLanguageTags, languageTag } from "../paraglide/runtime"
-    import { translatePath } from "$lib/i18n"
     import { goto } from "$app/navigation"
 	import { Avatar, popup } from "@skeletonlabs/skeleton";
-	import { enhance } from "$app/forms";
-	import { currentLanguageTag } from "$paraglide/messages";
     let language = [
           { name: "en", href:"/", icon: "https://cdn1.iconfinder.com/data/icons/world-flags-circular/1000/Flag_of_United_Kingdom_-_Circle-512.png"},
           { name: "vn",href:"/vn",  icon:"https://cdn-icons-png.flaticon.com/512/323/323319.png" },

@@ -6,9 +6,9 @@
 </script>
 <LightSwitch/>
 
-m.whattalking()
+<p>{m.whattalking()} </p>
 
 
-m.pokemon()
+<p>{m.pokemon()}</p>
 
 <Lang/>
